@@ -35,7 +35,7 @@ jobs:
         run: |
           yarn
           yarn add jest
-          cd src/frontend && yarn jest --coverage
+          cd src/frontend && yarn test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
