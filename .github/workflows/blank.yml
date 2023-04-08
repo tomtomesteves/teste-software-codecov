@@ -25,18 +25,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Generate Python Report 
         run: |
           pip install pytest
-          pip install pytest-cov
-          yarn
-          yarn add jest
-
-      - name: Generate Python Report 
-        run: pytest --cov=./ --cov-report=xml
+          pip install pytest-cov 
+          pytest --cov=./ --cov-report=xml
       
       - name: Generate JS Report
-        run: cd src/frontend && yarn jest --coverage
+        run: |
+          yarn
+          yarn add jest
+          cd src/frontend && yarn jest --coverage
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
