@@ -5,3 +5,8 @@ Trabalho prático da disciplina de teste de software
 
 Grupos:
 - Thomas Esteves
+
+
+## Coverage
+
+https://codecov.io/gh/tomtomesteves/teste-software-codecov/branch/main/graphs/tree.svg?token=FOUNB5JTWD
