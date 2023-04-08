@@ -30,6 +30,7 @@ jobs:
           pip install pytest
           pip install pytest-cov
           yarn
+          yarn add jest
 
       - name: Generate Python Report 
         run: pytest --cov=./ --cov-report=xml
