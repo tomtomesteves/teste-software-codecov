@@ -33,6 +33,7 @@ jobs:
           pip install pytest-cov 
           pip install coverage
           pytest --cov=./ --cov-report=xml
+          cat src/backend/main.py
           echo "Report coverage"
           coverage report
       
