@@ -33,6 +33,7 @@ jobs:
           pip install pytest-cov 
           pip install coverage
           pytest --cov=./ --cov-report=xml
+          echo "Report coverage"
           coverage report
       
       - name: Generate JS Report
