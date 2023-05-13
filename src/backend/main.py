@@ -1,9 +1,0 @@
-# Codecov test file
-
-
-def custom_sum(a: int, b: int) -> int:
-    return a + b
-
-
-def divide(a: int, b: int) -> int:
-    return a / b
