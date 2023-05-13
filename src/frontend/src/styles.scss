@@ -1,0 +1,19 @@
+.main-content {
+  padding: 20px 0px 0px 0px;
+  margin: 10px auto 20% auto;
+}
+
+.item {
+  margin: 10px;
+  .item-details {
+    & > div {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.main-form {
+  font-size: 18px;
+  width: 70%;
+  margin: auto;
+}
