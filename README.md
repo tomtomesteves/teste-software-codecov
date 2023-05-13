@@ -5,8 +5,10 @@ Trabalho prático da disciplina de teste de software
 
 Grupos:
 - Thomas Esteves
+- Rafael Massoni
+- Lucas Mariz
+- Evaldo Martins
 
 
-## Coverage
-
+## Coveragex
 https://codecov.io/gh/tomtomesteves/teste-software-codecov/branch/main/graphs/tree.svg?token=FOUNB5JTWD

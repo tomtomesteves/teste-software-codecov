@@ -1,0 +1,147 @@
+# Documentação da API de Tarefas
+
+## Introdução
+A API de Tarefas permite criar, recuperar, atualizar e excluir tarefas. Ela oferece endpoints para realizar operações CRUD (Create, Read, Update, Delete) em uma lista de tarefas.
+
+## Base URL
+A URL base para todas as chamadas de API é:
+
+http://localhost:5000
+
+Formato de resposta padrao:
+```
+Status: 200 OK
+Content-Type: application/json
+````
+
+## Endpoints
+
+### Recuperar todas as tarefas
+
+Retorna a lista de todas as tarefas.
+
+```bash
+GET /tasks
+```
+
+#### Parâmetros da Solicitação
+
+Nenhum.
+
+#### Exemplo de Resposta
+
+```json
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Fazer compras",
+      "description": "Comprar leite, pão e ovos",
+      "done": false
+    },
+    {
+      "id": 2,
+      "title": "Limpar a casa",
+      "description": "Limpar todos os cômodos da casa",
+      "done": true
+    }
+  ]
+}
+```
+### Recuperar uma tarefa específica
+Retorna os detalhes de uma tarefa com base no ID fornecido.
+
+```bash
+GET /tasks/{id}
+```
+
+#### Parâmetros da Solicitação
+id (obrigatório) - O ID da tarefa a ser recuperada.
+
+#### Exemplo de Resposta
+```json
+{
+  "id": 1,
+  "title": "Fazer compras",
+  "description": "Comprar leite, pão e ovos",
+  "done": false
+}
+```
+
+### Cria uma nova tarefa.
+
+```bash
+POST /tasks
+```
+
+#### Parâmetros da Solicitação
+title (obrigatório) - O título da tarefa.
+description (opcional) - A descrição da tarefa.
+done (opcional) - Indica se a tarefa está concluída (true) ou não (false). O valor padrão é false.
+
+#### Exemplo de Solicitação
+```json
+{
+  "title": "Estudar para a prova",
+  "description": "Revisar o material e fazer exercícios",
+  "done": false
+}
+```
+
+#### Exemplo de Resposta
+
+```json
+{
+  "id": 3,
+  "title": "Estudar para a prova",
+  "description": "Revisar o material e fazer exercícios",
+  "done": false
+}
+```
+### Atualizar uma tarefa existente
+Atualiza os detalhes de uma tarefa existente.
+
+```bash
+PUT /tasks/{id}
+```
+#### Parâmetros da Solicitação
+id (obrigatório) - O ID da tarefa a ser atualizada.
+title (opcional) - O novo título da tarefa.
+description (opcional) - A nova descrição da tarefa.
+done (opcional) - Indica se a tarefa está concluída (true) ou não (false).
+
+#### Exemplo de Solicitação
+```json
+{
+  "title": "Estudar para a prova final",
+  "done": true
+}
+```
+#### Exemplo de Resposta
+
+```json
+{
+  "id": 3,
+  "title": "Tarefa atualizada",
+  "description": "Esta é uma tarefa atualizada",
+  "done": true
+}
+```
+
+### Excluir uma tarefa
+Exclui uma tarefa existente.
+
+```bash
+DELETE /tasks/{id}
+```
+#### Parâmetros da Solicitação
+id (obrigatório) - O ID da tarefa a ser excluída.
+
+#### Exemplo de Solicitação
+```bash
+DELETE /tasks/3
+```
+#### Exemplo de Resposta
+```yaml
+Status: 204 No Content
+```
