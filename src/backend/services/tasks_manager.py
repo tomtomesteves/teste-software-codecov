@@ -1,9 +1,16 @@
 from entity.task import Task
 from services.database import PostgreSQLConnection
 
+
 class TaskManager:
     def __init__(self):
-        self.db = PostgreSQLConnection(host='localhost', port=5432, database='mydatabase', user='myuser', password='mypassword')
+        self.db = PostgreSQLConnection(
+            host="localhost",
+            port=5432,
+            database="mydatabase",
+            user="myuser",
+            password="mypassword",
+        )
         self.db.connect()
         self.initialize_database()
 
