@@ -32,6 +32,7 @@ jobs:
           pip install pytest
           pip install pytest-cov 
           pip install coverage
+          pip install -r src/backend/requirements.txt
           PYTHONPATH=src/backend pytest --cov=./ --cov-report=xml
           coverage report
       
