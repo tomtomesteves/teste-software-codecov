@@ -5,6 +5,9 @@ Trabalho prático da disciplina de teste de software
 
 Grupos:
 - Thomas Esteves
+- Rafael Massoni
+- Lucas Mariz
+- Evaldo Martins
 
 
 ## Coveragex
