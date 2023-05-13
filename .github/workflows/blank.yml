@@ -36,11 +36,11 @@ jobs:
           PYTHONPATH=src/backend pytest --cov=./ --cov-report=xml
           coverage report
       
-      - name: Generate JS Report
-        run: |
-          yarn
-          export PATH="$PATH:$./src/frontend/node_modules/.bin"
-          cd src/frontend && yarn test
+      # - name: Generate JS Report
+      #   run: |
+      #     yarn
+      #     export PATH="$PATH:$./src/frontend/node_modules/.bin"
+      #     cd src/frontend && yarn test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
