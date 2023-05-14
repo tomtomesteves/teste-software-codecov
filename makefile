@@ -4,7 +4,9 @@
 .PHONY: run test
 
 run:
-	python src/backend/app.py
+	echo "Not implemented"
+	exit 1
+	# python src/backend/app.py
 
 test:
 	PYTHONPATH=src/backend pytest
