@@ -17,10 +17,7 @@ def mock_postgresql_connection():
 
 def test_create_task(mock_postgresql_connection):
     task_manager = TaskManager()
-    task_manager.create_task = MagicMock(
-        return_value=Task(id=1, title="Task 1", description="Description 1", done=False)
-    )
-
+    mock_postgresql_connection.fetchone.return_value = [1, "Task 1", "Description 1", False]
     result = task_manager.create_task("Task 1", "Description 1")
 
     assert result.id == 1
@@ -60,10 +57,8 @@ def test_update_task(mock_postgresql_connection):
 
 
 def test_delete_task(mock_postgresql_connection):
+    mock_postgresql_connection.fetchone.return_value = [1, "Task 1", "Description 1", False]
     task_manager = TaskManager()
-    task_manager.delete_task = MagicMock(
-        return_value=Task(id=1, title="Task 1", description="Description 1", done=False)
-    )
 
     result = task_manager.delete_task(1)
 
@@ -77,15 +72,13 @@ def test_get_all_tasks(mock_postgresql_connection):
 
     mock_db = MagicMock()
     mock_postgresql_connection.return_value = mock_db
+    mock_postgresql_connection.fetchall.return_value = [
+        [1, "Task 1", "Description 1", False],
+        [2, "Task 2", "Description 2", True],
+        [3, "Task 3", "Description 3", False]
+    ]
 
     task_manager = TaskManager()
-    task_manager.get_all_tasks = MagicMock(
-        return_value=[
-            Task(id=1, title="Task 1", description="Description 1", done=False),
-            Task(id=2, title="Task 2", description="Description 2", done=True),
-            Task(id=3, title="Task 3", description="Description 3", done=False),
-        ]
-    )
 
     result = task_manager.get_all_tasks()
 
@@ -106,7 +99,6 @@ def test_get_all_tasks(mock_postgresql_connection):
 
 def test_get_all_tasks_empty_list(mock_postgresql_connection):
     task_manager = TaskManager()
-    task_manager.get_all_tasks = MagicMock(return_value=[])
 
     result = task_manager.get_all_tasks()
 
