@@ -9,6 +9,10 @@ run:
 test:
 	PYTHONPATH=src/backend pytest
 
+test-report:
+	PYTHONPATH=src/backend coverage run -m  pytest
+	coverage report -m
+
 # Comandos para o Docker Compose
 .PHONY: docker-up docker-down docker-clean-setup
 
