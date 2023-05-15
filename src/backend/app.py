@@ -4,6 +4,11 @@ from services.tasks_manager import TaskManager
 app = Flask(__name__)
 task_manager = TaskManager()
 
+# Rota raiz
+@app.route("/", methods=["GET"])
+def root():
+    return jsonify({"message": "OK"})
+
 # Rota para listar todas as tarefas
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
