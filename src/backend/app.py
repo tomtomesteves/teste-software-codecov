@@ -1,7 +1,11 @@
 from flask import Flask, jsonify, request
 from services.tasks_manager import TaskManager
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
+
 task_manager = TaskManager()
 
 # Rota raiz
