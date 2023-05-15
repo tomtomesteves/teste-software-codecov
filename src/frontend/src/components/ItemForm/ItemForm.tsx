@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { Task } from '../../models/Task'
+import ShouldRender from '../ShouldRender'
 
 type Params = {
   item?: Task
@@ -8,6 +9,8 @@ type Params = {
 }
 
 const ItemForm = (props: Params) => {
+  const isUpdate = !!props?.item
+
   const [item, setItem] = useState<Task>(() => {
     if (props?.item) {
       return { ...props.item }
@@ -15,15 +18,17 @@ const ItemForm = (props: Params) => {
     return {
       title: '',
       description: '',
+      done: false,
     }
   })
+  console.log('item', item)
 
   const [errorMsg, setErrorMsg] = useState('')
-  const { title, description } = item
+  const { title, description, done } = item
 
   const handleOnSubmit = (event: any) => {
     event.preventDefault()
-    const values = [title, description]
+    const values = [title, description, done]
 
     const filled = values.every((field) => {
       const value = `${field}`.trim()
@@ -37,6 +42,7 @@ const ItemForm = (props: Params) => {
     const item = {
       title,
       description,
+      done,
     }
     props.handleOnSubmit(item)
   }
@@ -57,6 +63,12 @@ const ItemForm = (props: Params) => {
       return setItem((prevState: Task) => ({
         ...prevState,
         [name]: value,
+      }))
+    }
+    if (name === 'done') {
+      return setItem((prevState: Task) => ({
+        ...prevState,
+        [name]: !item?.done,
       }))
     }
     return setItem((prevState: Task) => ({
@@ -95,6 +107,19 @@ const ItemForm = (props: Params) => {
             onChange={handleInputChange}
           />
         </Form.Group>
+        <ShouldRender if={isUpdate}>
+          <Form.Group controlId="done">
+            <Form.Label>Completo?</Form.Label>
+            <Form.Control
+              className="form-control"
+              type="checkbox"
+              name="done"
+              checked={!!item?.done}
+              placeholder="A tarefa está completa"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+        </ShouldRender>
         <Button type="submit" className="btn btn-primary">
           Submit
         </Button>
