@@ -1,8 +1,8 @@
 import React, { FC, useReducer } from 'react'
-import ItemForm from './ItemForm'
-import { Item } from '../models/Item'
+import ItemForm from '../ItemForm'
+import { Task } from '../../models/Task'
 import { RouteComponentProps } from 'react-router-dom'
-import useAPI from '../hooks/useAPI'
+import useAPI from '../../hooks/useAPI'
 import { Toast } from 'react-bootstrap'
 
 interface Params extends RouteComponentProps<any> {}
@@ -11,7 +11,7 @@ const AddItem: FC<Params> = ({ history }) => {
   const api = useAPI()
   const [show, toggleToast] = useReducer((x: boolean) => !x, false)
 
-  const onSubmit = async (item: Item) => {
+  const onSubmit = async (item: Task) => {
     try {
       await api.post('tasks', { ...item })
       history.push('/')

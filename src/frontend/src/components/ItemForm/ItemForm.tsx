@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { Item } from '../models/Item'
+import { Task } from '../../models/Task'
 
 type Params = {
-  item?: Item
-  handleOnSubmit: (item: Item) => Promise<void>
+  item?: Task
+  handleOnSubmit: (item: Task) => Promise<void>
 }
 
 const ItemForm = (props: Params) => {
-  const [item, setItem] = useState<Item>(() => {
+  const [item, setItem] = useState<Task>(() => {
     if (props?.item) {
       return { ...props.item }
     }
@@ -45,7 +45,7 @@ const ItemForm = (props: Params) => {
     const { name, value } = event.target
 
     if ((name === 'quantity' && value === '') || parseInt(value) === +value) {
-      return setItem((prevState: Item) => ({
+      return setItem((prevState: Task) => ({
         ...prevState,
         [name]: value,
       }))
@@ -54,12 +54,12 @@ const ItemForm = (props: Params) => {
       (name === 'price' && value === '') ||
       value.match(/^\d{1,}(\.\d{0,2})?$/)
     ) {
-      return setItem((prevState: Item) => ({
+      return setItem((prevState: Task) => ({
         ...prevState,
         [name]: value,
       }))
     }
-    return setItem((prevState: Item) => ({
+    return setItem((prevState: Task) => ({
       ...prevState,
       [name]: value,
     }))

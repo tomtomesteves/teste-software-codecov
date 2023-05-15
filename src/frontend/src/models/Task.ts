@@ -1,4 +1,4 @@
-export type Item = {
+export type Task = {
   title: string
   description: string
   done?: boolean

@@ -1,10 +1,10 @@
 import { FC, useEffect, useReducer, useState } from 'react'
-import ItemForm from './ItemForm'
+import ItemForm from '../ItemForm'
 import { RouteComponentProps, useParams } from 'react-router-dom'
-import { Item } from '../models/Item'
-import useAPI from '../hooks/useAPI'
+import { Task } from '../../models/Task'
+import useAPI from '../../hooks/useAPI'
 import { Toast } from 'react-bootstrap'
-import ShouldRender from './ShouldRender'
+import ShouldRender from '../ShouldRender'
 
 interface Params extends RouteComponentProps<any> {}
 
@@ -12,7 +12,7 @@ const EditItem: FC<Params> = ({ history }) => {
   const { id } = useParams<{ id: string }>()
   const api = useAPI()
 
-  const [itemToEdit, setItemToEdit] = useState<Item>()
+  const [itemToEdit, setItemToEdit] = useState<Task>()
   const [show, toggleToast] = useReducer((x: boolean) => !x, false)
 
   const getItem = async () => {
@@ -28,7 +28,7 @@ const EditItem: FC<Params> = ({ history }) => {
     getItem()
   }, [id])
 
-  const onSubmit = async (item: Item) => {
+  const onSubmit = async (item: Task) => {
     try {
       await api.put(`tasks/${id}`, { ...item })
       history.push('/')

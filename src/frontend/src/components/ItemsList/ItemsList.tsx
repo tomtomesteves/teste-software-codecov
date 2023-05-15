@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import Item from './Item'
-import useAPI from '../hooks/useAPI'
-import { Item as ItemType } from '../models/Item'
-import ShouldRender from './ShouldRender'
+import Item from '../Item'
+import useAPI from '../../hooks/useAPI'
+import { Task } from '../../models/Task'
+import ShouldRender from '../ShouldRender'
 
 const ItemsList = () => {
   const api = useAPI()
-  const [list, setList] = useState<ItemType[]>([])
+  const [list, setList] = useState<Task[]>([])
 
   const getList = async () => {
     try {

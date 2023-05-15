@@ -2,13 +2,10 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import Header from '../components/Header'
 import AddItem from '../components/AddItem'
 import ItemList from '../components/ItemsList'
-import useLocalStorage from '../hooks/useLocalStorage'
 import EditItem from '../components/EditItem'
 import Footer from '../components/Footer'
 
 const AppRouter = () => {
-  const [items, setItems] = useLocalStorage('items', [])
-
   return (
     <BrowserRouter>
       <div>

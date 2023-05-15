@@ -2,21 +2,26 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import Header from '../components/Header'
 import { BrowserRouter } from 'react-router-dom'
 
-//test block
-test('test navigation', () => {
-  // render the component on virtual dom
+test('Navigate to add page when press ad', () => {
   render(
     <BrowserRouter>
       <Header />
     </BrowserRouter>
   )
 
-  //select the elements you want to interact with
-  const addItemBtn = screen.getByTestId('add-item')
-
-  //interact with those elements
+  const addItemBtn = screen.getByTestId('add-btn')
   fireEvent.click(addItemBtn)
+  expect(global.window.location.pathname).toBe('/add')
+})
 
-  //assert the expected result
-  expect(global.window.location.pathname).toContain('/add')
+test('Navigate to home page when press home', () => {
+  render(
+    <BrowserRouter>
+      <Header />
+    </BrowserRouter>
+  )
+
+  const addItemBtn = screen.getByTestId('home-btn')
+  fireEvent.click(addItemBtn)
+  expect(global.window.location.pathname).toBe('/')
 })

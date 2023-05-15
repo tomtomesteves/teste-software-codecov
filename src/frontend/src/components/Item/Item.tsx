@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { Button, Card } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import { Item as ItemType } from '../models/Item'
+import { Task } from '../../models/Task'
 
 type Params = {
   removeItem: (id: number) => void
-} & ItemType
+} & Task
 
 const Item: FC<Params> = ({ id, title, description, removeItem }) => {
   const history = useHistory()

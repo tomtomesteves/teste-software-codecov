@@ -19,7 +19,12 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarExample01">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item active">
-                <NavLink to="/" className=" btn " activeClassName="active">
+                <NavLink
+                  data-testid="home-btn"
+                  to="/"
+                  className=" btn "
+                  activeClassName="active"
+                >
                   Home
                 </NavLink>
               </li>
@@ -33,7 +38,7 @@ const Header = () => {
         <h4 className="mb-3">Adicione itens a serem comprados!</h4>
         {!global.window.location.pathname.includes('/add') && (
           <NavLink
-            data-testid="add-item"
+            data-testid="add-btn"
             to="/add"
             className="link btn btn-primary"
             activeClassName="active"
