@@ -25,4 +25,5 @@ docker-down:
 	docker-compose -f src/backend/infra/docker-compose.yml down
 
 docker-clean-setup:
+	docker rmi infra-backend
 	docker-compose -f src/backend/infra/docker-compose.yml down -v
