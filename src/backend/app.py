@@ -4,6 +4,11 @@ from services.tasks_manager import TaskManager
 app = Flask(__name__)
 task_manager = TaskManager()
 
+# Rota raiz
+@app.route("/", methods=["GET"])
+def root():
+    return jsonify({"message": "OK"})
+
 # Rota para listar todas as tarefas
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
@@ -54,4 +59,4 @@ def delete_task(task_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run("0.0.0.0", port=80, debug=True)

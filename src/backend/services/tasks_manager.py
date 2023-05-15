@@ -5,7 +5,7 @@ from services.database import PostgreSQLConnection
 class TaskManager:
     def __init__(self):
         self.db = PostgreSQLConnection(
-            host="localhost",
+            host="postgres",
             port=5432,
             database="mydatabase",
             user="myuser",

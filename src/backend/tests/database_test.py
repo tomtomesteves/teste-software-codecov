@@ -22,7 +22,7 @@ def test_postgresql_connection(mock_connect):
     )
 
     connection.connect()
-    mock_connect.assert_called_once_with(
+    mock_connect.assert_called_with(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -90,8 +90,44 @@ def test_postgresql_close_connection(mock_connect):
     mock_cursor.close.assert_called_once()
     mock_connection.close.assert_called_once()
 
+@patch("psycopg2.connect")
+def test_postgresql_fetchone(mock_connect):
+    mock_cursor = Mock()
+    mock_connection = Mock()
+    mock_connection.cursor.return_value = mock_cursor
+    mock_connect.return_value = mock_connection
 
-def test_postgresql_connection_error():
+    connection = PostgreSQLConnection(
+        host="localhost",
+        port=5432,
+        database="mydatabase",
+        user="myuser",
+        password="mypassword",
+    )
+    connection.connect()
+    connection.fetchone()
+    mock_cursor.fetchone.assert_called_once()
+
+@patch("psycopg2.connect")
+def test_postgresql_fetchall(mock_connect):
+    mock_cursor = Mock()
+    mock_connection = Mock()
+    mock_connection.cursor.return_value = mock_cursor
+    mock_connect.return_value = mock_connection
+
+    connection = PostgreSQLConnection(
+        host="localhost",
+        port=5432,
+        database="mydatabase",
+        user="myuser",
+        password="mypassword",
+    )
+    connection.connect()
+    connection.fetchall()
+    mock_cursor.fetchall.assert_called_once()
+
+@patch('time.sleep')
+def test_postgresql_connection_error(time):
     connection = PostgreSQLConnection(
         host="localhost",
         port=5555,
