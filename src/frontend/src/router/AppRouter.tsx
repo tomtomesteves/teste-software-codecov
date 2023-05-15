@@ -4,7 +4,6 @@ import AddItem from '../components/AddItem'
 import ItemList from '../components/ItemsList'
 import useLocalStorage from '../hooks/useLocalStorage'
 import EditItem from '../components/EditItem'
-import ItemsContext from '../context/ItemsContext'
 import Footer from '../components/Footer'
 
 const AppRouter = () => {
@@ -16,14 +15,12 @@ const AppRouter = () => {
         <Header />
         <div className="bg-light">
           <div className="main-content">
-            <ItemsContext.Provider value={{ items, setItems }}>
-              <Switch>
-                <Route component={ItemList} path="/" exact={true} />
-                <Route component={AddItem} path="/add" />
-                <Route component={EditItem} path="/edit/:id" />
-                <Route component={() => <Redirect to="/" />} />
-              </Switch>
-            </ItemsContext.Provider>
+            <Switch>
+              <Route component={ItemList} path="/" exact={true} />
+              <Route component={AddItem} path="/add" />
+              <Route component={EditItem} path="/edit/:id" />
+              <Route component={() => <Redirect to="/" />} />
+            </Switch>
           </div>
         </div>
         <Footer />

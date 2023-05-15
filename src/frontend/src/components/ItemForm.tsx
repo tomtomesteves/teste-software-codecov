@@ -1,28 +1,29 @@
 import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { v4 as uuidv4 } from 'uuid'
 import { Item } from '../models/Item'
 
-const ItemForm = (props: any) => {
-  const [item, setItem] = useState(() => {
-    if (props.item) {
+type Params = {
+  item?: Item
+  handleOnSubmit: (item: Item) => Promise<void>
+}
+
+const ItemForm = (props: Params) => {
+  const [item, setItem] = useState<Item>(() => {
+    if (props?.item) {
       return { ...props.item }
     }
     return {
-      name: '',
-      brand: '',
-      quantity: '',
-      price: '',
-      date: '',
+      title: '',
+      description: '',
     }
   })
 
   const [errorMsg, setErrorMsg] = useState('')
-  const { name, brand, price, quantity } = item
+  const { title, description } = item
 
   const handleOnSubmit = (event: any) => {
     event.preventDefault()
-    const values = [name, brand, price, quantity]
+    const values = [title, description]
 
     const filled = values.every((field) => {
       const value = `${field}`.trim()
@@ -34,12 +35,8 @@ const ItemForm = (props: any) => {
     }
 
     const item = {
-      id: uuidv4(),
-      name,
-      brand,
-      price,
-      quantity,
-      date: new Date(),
+      title,
+      description,
     }
     props.handleOnSubmit(item)
   }
@@ -76,47 +73,25 @@ const ItemForm = (props: any) => {
         </div>
       )}
       <Form onSubmit={handleOnSubmit}>
-        <Form.Group controlId="name">
-          <Form.Label>Nome</Form.Label>
+        <Form.Group controlId="title">
+          <Form.Label>Título</Form.Label>
           <Form.Control
             className="form-control"
             type="text"
-            name="name"
-            value={name}
-            placeholder="Item name"
+            name="title"
+            value={title}
+            placeholder="Título da tarefa"
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Form.Group controlId="brand">
-          <Form.Label>Marca</Form.Label>
+        <Form.Group controlId="description">
+          <Form.Label>Descrição</Form.Label>
           <Form.Control
             className="form-control"
             type="text"
-            name="brand"
-            value={brand}
-            placeholder="Nome da marca"
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="quantity">
-          <Form.Label>Quantidade</Form.Label>
-          <Form.Control
-            className="form-control"
-            type="number"
-            name="quantity"
-            value={quantity}
-            placeholder="Quantidade"
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="price">
-          <Form.Label>Preço</Form.Label>
-          <Form.Control
-            className="form-control"
-            type="text"
-            name="price"
-            value={price}
-            placeholder="Preço"
+            name="description"
+            value={description}
+            placeholder="Descrição da tarefa"
             onChange={handleInputChange}
           />
         </Form.Group>

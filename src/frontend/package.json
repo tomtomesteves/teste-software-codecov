@@ -13,6 +13,7 @@
     "@types/react-dom": "^18.2.4",
     "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^9.0.1",
+    "axios": "^1.4.0",
     "bootstrap": "4.6.0",
     "lodash": "4.17.21",
     "node-sass": "8.0.0",
@@ -27,7 +28,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll --testMatch **/src/**/*.test.tsx",
     "eject": "react-scripts eject"

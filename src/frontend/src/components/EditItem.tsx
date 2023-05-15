@@ -1,25 +1,50 @@
-import { FC, useContext } from 'react'
+import { FC, useEffect, useReducer, useState } from 'react'
 import ItemForm from './ItemForm'
 import { RouteComponentProps, useParams } from 'react-router-dom'
-import ItemsContext from '../context/ItemsContext'
 import { Item } from '../models/Item'
+import useAPI from '../hooks/useAPI'
+import { Toast } from 'react-bootstrap'
+import ShouldRender from './ShouldRender'
 
 interface Params extends RouteComponentProps<any> {}
 
 const EditItem: FC<Params> = ({ history }) => {
-  const { items, setItems } = useContext(ItemsContext)
   const { id } = useParams<{ id: string }>()
-  const itemToEdit = items?.find((item: Item) => item.id === id)
+  const api = useAPI()
 
-  const onSubmit = (item: Item) => {
-    const filteredItems = items?.filter((item: Item) => item?.id !== id) ?? []
-    setItems([item, ...filteredItems])
-    history.push('/')
+  const [itemToEdit, setItemToEdit] = useState<Item>()
+  const [show, toggleToast] = useReducer((x: boolean) => !x, false)
+
+  const getItem = async () => {
+    try {
+      const { data } = await api.get(`tasks/${id}`)
+      setItemToEdit(data)
+    } catch (e) {
+      console.error('ERROR GETTING ELEMENT', e)
+    }
+  }
+
+  useEffect(() => {
+    getItem()
+  }, [id])
+
+  const onSubmit = async (item: Item) => {
+    try {
+      await api.put(`tasks/${id}`, { ...item })
+      history.push('/')
+    } catch (e) {
+      console.error('ERROR EDIT ELEMENT', e)
+    }
   }
 
   return (
     <div>
-      <ItemForm item={itemToEdit} handleOnSubmit={onSubmit} />
+      <ShouldRender if={!!itemToEdit}>
+        <Toast show={show} onClose={toggleToast}>
+          <Toast.Body>Algo de errado ocorreu! Tente novamente</Toast.Body>
+        </Toast>
+        <ItemForm item={itemToEdit} handleOnSubmit={onSubmit} />
+      </ShouldRender>
     </div>
   )
 }

@@ -1,27 +1,52 @@
-import React, { useContext } from 'react'
+import { useEffect, useState } from 'react'
 import Item from './Item'
-import ItemsContext from '../context/ItemsContext'
+import useAPI from '../hooks/useAPI'
+import { Item as ItemType } from '../models/Item'
+import ShouldRender from './ShouldRender'
 
 const ItemsList = () => {
-  const { items, setItems } = useContext(ItemsContext)
+  const api = useAPI()
+  const [list, setList] = useState<ItemType[]>([])
 
-  const removeItem = (id: string) => {
-    setItems(items?.filter((item: any) => item.id !== id))
+  const getList = async () => {
+    try {
+      const { data } = await api.get('tasks')
+      setList(data?.tasks)
+    } catch (e) {
+      console.error('ERROR GETTING LIST', e)
+    }
+  }
+
+  useEffect(() => {
+    getList()
+  }, [])
+
+  const removeItem = async (id: number) => {
+    try {
+      await api.delete(`tasks/${id}`)
+      getList()
+    } catch (e) {
+      console.error('ERROR DELETING ELEMENT', e)
+    }
   }
 
   return (
-    <React.Fragment>
-      <div className="d-flex justify-content-center">
-        {items?.map((item: any) => (
-          <Item key={item.id} {...item} removeItem={removeItem} />
-        ))}
-        {!items?.length && (
+    <>
+      <ShouldRender if={!!list?.length}>
+        <div className="d-flex justify-content-center">
+          {list?.map((item: any) => (
+            <Item key={item?.id} {...item} removeItem={removeItem} />
+          ))}
+        </div>
+      </ShouldRender>
+      <ShouldRender if={!list?.length}>
+        <div className="d-flex justify-content-center">
           <div className="alert alert-warning" role="alert">
             Nenhum item cadastrado!
           </div>
-        )}
-      </div>
-    </React.Fragment>
+        </div>
+      </ShouldRender>
+    </>
   )
 }
 
