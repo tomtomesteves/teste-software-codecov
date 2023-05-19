@@ -21,7 +21,6 @@ const ItemForm = (props: Params) => {
       done: false,
     }
   })
-  console.log('item', item)
 
   const [errorMsg, setErrorMsg] = useState('')
   const { title, description, done } = item
@@ -80,15 +79,20 @@ const ItemForm = (props: Params) => {
   return (
     <div className="main-form">
       {errorMsg && (
-        <div className="alert alert-warning" role="alert">
+        <div
+          data-testid="error-message"
+          className="alert alert-warning"
+          role="alert"
+        >
           {errorMsg}
         </div>
       )}
       <Form onSubmit={handleOnSubmit}>
         <Form.Group controlId="title">
-          <Form.Label>Título</Form.Label>
+          <Form.Label data-testid="title-label">Título</Form.Label>
           <Form.Control
             className="form-control"
+            data-testid="title-control"
             type="text"
             name="title"
             value={title}
@@ -97,9 +101,10 @@ const ItemForm = (props: Params) => {
           />
         </Form.Group>
         <Form.Group controlId="description">
-          <Form.Label>Descrição</Form.Label>
+          <Form.Label data-testid="description-label">Descrição</Form.Label>
           <Form.Control
             className="form-control"
+            data-testid="description-control"
             type="text"
             name="description"
             value={description}
@@ -109,9 +114,10 @@ const ItemForm = (props: Params) => {
         </Form.Group>
         <ShouldRender if={isUpdate}>
           <Form.Group controlId="done">
-            <Form.Label>Completo?</Form.Label>
+            <Form.Label data-testid="complete-label">Completo?</Form.Label>
             <Form.Control
               className="form-control"
+              data-testid="complete-control"
               type="checkbox"
               name="done"
               checked={!!item?.done}
@@ -120,7 +126,11 @@ const ItemForm = (props: Params) => {
             />
           </Form.Group>
         </ShouldRender>
-        <Button type="submit" className="btn btn-primary">
+        <Button
+          type="submit"
+          data-testid="submit-btn"
+          className="btn btn-primary"
+        >
           Submit
         </Button>
       </Form>
