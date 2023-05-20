@@ -25,3 +25,29 @@ test('Navigate to home page when press home', () => {
   fireEvent.click(addItemBtn)
   expect(global.window.location.pathname).toBe('/')
 })
+
+test('Navigate to the delete page of the selected item when clicking on delete', () => {
+  render(
+    <BrowserRouter>
+      <Header />
+    </BrowserRouter>
+  )
+
+  const deleteItemBtn = screen.getByTestId('del-btn')
+  fireEvent.click(deleteItemBtn)
+  expect(global.window.location.pathname).toBe('/delete')
+})
+
+test('Navigate to the edit page of the selected item when clicking on edit', () => {
+  render(
+    <BrowserRouter>
+      <Header />
+    </BrowserRouter>
+  )
+
+  const editItemBtn = screen.getByTestId('edit-btn')
+  fireEvent.click(editItemBtn)
+  expect(global.window.location.pathname).toBe('/edit')
+})
+
+

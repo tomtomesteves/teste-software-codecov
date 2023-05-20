@@ -190,7 +190,4 @@ describe('ItemForm', () => {
     
     expect(handleOnSubmit).not.toHaveBeenCalled();
   })
-  
-  
-  
 })
