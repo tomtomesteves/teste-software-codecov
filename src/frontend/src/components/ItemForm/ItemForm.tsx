@@ -95,6 +95,7 @@ const ItemForm = (props: Params) => {
             data-testid="title-control"
             type="text"
             name="title"
+            required
             value={title}
             placeholder="Título da tarefa"
             onChange={handleInputChange}
@@ -107,6 +108,8 @@ const ItemForm = (props: Params) => {
             data-testid="description-control"
             type="text"
             name="description"
+            maxLength={50}
+            required
             value={description}
             placeholder="Descrição da tarefa"
             onChange={handleInputChange}

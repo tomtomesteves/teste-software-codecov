@@ -38,6 +38,7 @@ const Item: FC<Params> = ({ id, title, description, done, removeItem }) => {
         <div className="text-center">
           <Button
             variant="primary"
+            data-testid="edit-btn"
             className="btn btn-primary"
             onClick={() => history.push(`/edit/${id}`)}
           >
