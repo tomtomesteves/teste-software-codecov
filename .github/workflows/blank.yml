@@ -38,9 +38,9 @@ jobs:
       
       - name: Generate JS Report
         run: |
-          yarn
-          export PATH="$PATH:$./src/frontend/node_modules/.bin"
-          cd src/frontend && yarn test
+          cd src/frontend
+          yarn install
+          yarn test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
