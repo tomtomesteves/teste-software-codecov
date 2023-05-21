@@ -34,8 +34,8 @@ const Header = () => {
       </nav>
 
       <div className="p-5 text-center bg-light">
-        <h1 className="mb-3">Lista de Compras</h1>
-        <h4 className="mb-3">Adicione itens a serem comprados!</h4>
+        <h1 className="mb-3">Lista de tarefas</h1>
+        <h4 className="mb-3">Adicione tarefas a serem feitas!</h4>
         {!global.window.location.pathname.includes('/add') && (
           <NavLink
             data-testid="add-btn"
