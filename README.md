@@ -2,6 +2,7 @@
 Trabalho prático da disciplina de teste de software
 
 [![codecov](https://codecov.io/gh/tomtomesteves/teste-software-codecov/branch/main/graph/badge.svg?token=FOUNB5JTWD)](https://codecov.io/gh/tomtomesteves/teste-software-codecov)
+[![CI](https://github.com/tomtomesteves/teste-software-codecov/actions/workflows/blank.yml/badge.svg?branch=main)](https://github.com/tomtomesteves/teste-software-codecov/actions/workflows/blank.yml)
 
 Grupos:
 - Thomas Esteves
