@@ -45,6 +45,7 @@ const Item: FC<Params> = ({ id, title, description, done, removeItem }) => {
             Editar
           </Button>{' '}
           <Button
+            data-testid="delete-btn"
             className="btn btn-danger"
             variant="danger"
             onClick={() => removeItem(id ?? 0)}

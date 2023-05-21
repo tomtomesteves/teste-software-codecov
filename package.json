@@ -4,7 +4,10 @@
   "description": "",
   "main": "src/frontend/script.js",
   "scripts": {
-    "test": "jest --coverage"
+  "test": "jest --coverage",
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "eject": "react-scripts eject"
   },
   "author": "",
   "license": "ISC",

@@ -26,4 +26,5 @@ describe('Header', () => {
     fireEvent.click(addItemBtn)
     expect(global.window.location.pathname).toBe('/')
   })
+  
 })
