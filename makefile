@@ -4,16 +4,18 @@
 .PHONY: run test
 
 run:
-	echo "Not implemented"
-	exit 1
-	# python src/backend/app.py
+	docker-compose -f src/backend/infra/docker-compose.yml up -d
+	cd src/frontend && yarn install
+	cd src/frontend && yarn start
 
 test:
 	PYTHONPATH=src/backend pytest
+	cd src/frontend && yarn test --watchAll=false &
 
 test-report:
 	PYTHONPATH=src/backend coverage run -m  pytest
 	coverage report -m
+	cd src/frontend && yarn report --watchAll=false &
 
 # Comandos para o Docker Compose
 .PHONY: docker-up docker-down docker-clean-setup

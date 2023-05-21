@@ -7,7 +7,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
-  pull_request_target:
+  pull_request:
     branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -36,11 +36,11 @@ jobs:
           PYTHONPATH=src/backend pytest --cov=./ --cov-report=xml
           coverage report
       
-      # - name: Generate JS Report
-      #   run: |
-      #     yarn
-      #     export PATH="$PATH:$./src/frontend/node_modules/.bin"
-      #     cd src/frontend && yarn test
+      - name: Generate JS Report
+        run: |
+          cd src/frontend
+          yarn install
+          yarn test --coverage --testMatch **/src/**/*.test.tsx
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
