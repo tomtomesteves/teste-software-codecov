@@ -25,7 +25,7 @@ jest.mock('./../hooks/useAPI', () => {
   }))
 })
 
-describe('AddItem', () => {
+describe('Task List', () => {
   it('submits form and redirects to home page', () => {
     const serverApi = jest.fn(() => ({
       get: jest.fn().mockReturnValue({ data: { tasks: MOCKED_LIST } }),

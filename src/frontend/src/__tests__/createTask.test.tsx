@@ -21,7 +21,7 @@ jest.mock('./../hooks/useAPI', () => {
   }))
 })
 
-describe('AddItem', () => {
+describe('Create Task', () => {
   it('submits form and redirects to home page', () => {
     const history = createMemoryHistory()
     const serverApi = jest.fn(() => ({
