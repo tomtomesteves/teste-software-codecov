@@ -2,7 +2,6 @@ import axios, { AxiosInstance } from 'axios'
 
 type Params = {
   params?: Record<string, any>
-  adv?: boolean
 }
 
 type Hook = (params?: Params) => AxiosInstance
