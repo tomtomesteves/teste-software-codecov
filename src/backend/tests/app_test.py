@@ -27,3 +27,22 @@ def test_create_and_delete_task(test_client):
     task = response.json["task"]
     response = test_client.delete(f"/tasks/{task['id']}")
     assert response.status_code == 200
+
+def test_get_all_tasks(test_client):
+    for i in range(5):
+        test_client.post("/tasks", json={"title": f"title{i}", "description": f"description{i}"})
+
+    response = test_client.get("/tasks")
+    assert response.status_code == 200
+    tasks = response.json["tasks"]
+    assert len(tasks) == 5
+
+
+def test_get_single_task(test_client):
+    response = test_client.post("/tasks", json={"title": "title1", "description": "description1"})
+    task_id = 1
+
+    response = test_client.get(f"/tasks/{task_id}")
+    assert response.status_code == 200
+    task = response.json
+    assert task["id"] == task_id
