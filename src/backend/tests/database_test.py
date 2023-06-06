@@ -2,7 +2,7 @@ import pytest
 
 from unittest.mock import Mock, patch, MagicMock
 
-from services.database import PostgreSQLConnection
+from services.database import DatabaseConnection
 from psycopg2 import OperationalError
 
 
@@ -13,7 +13,7 @@ def test_postgresql_connection(mock_connect):
     mock_connection.cursor.return_value = mock_cursor
     mock_connect.return_value = mock_connection
 
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -39,7 +39,7 @@ def test_postgresql_query(mock_connect):
     mock_connection.cursor.return_value = mock_cursor
     mock_connect.return_value = mock_connection
 
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -59,7 +59,7 @@ def test_postgresql_transaction(mock_connect):
     mock_connection.cursor.return_value = mock_cursor
     mock_connect.return_value = mock_connection
 
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -78,7 +78,7 @@ def test_postgresql_close_connection(mock_connect):
     mock_connection.cursor.return_value = mock_cursor
     mock_connect.return_value = mock_connection
 
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -97,7 +97,7 @@ def test_postgresql_fetchone(mock_connect):
     mock_connection.cursor.return_value = mock_cursor
     mock_connect.return_value = mock_connection
 
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -115,7 +115,7 @@ def test_postgresql_fetchall(mock_connect):
     mock_connection.cursor.return_value = mock_cursor
     mock_connect.return_value = mock_connection
 
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5432,
         database="mydatabase",
@@ -128,7 +128,7 @@ def test_postgresql_fetchall(mock_connect):
 
 @patch('time.sleep')
 def test_postgresql_connection_error(time):
-    connection = PostgreSQLConnection(
+    connection = DatabaseConnection(
         host="localhost",
         port=5555,
         database="mydatabase",

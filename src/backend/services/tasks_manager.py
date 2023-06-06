@@ -1,34 +1,25 @@
 from entity.task import Task
-from services.database import PostgreSQLConnection
+from constants.queries import Queries
 
 
 class TaskManager:
-    def __init__(self):
-        self.db = PostgreSQLConnection(
-            host="postgres",
-            port=5432,
-            database="mydatabase",
-            user="myuser",
-            password="mypassword",
-        )
+    def __init__(self, db_connection):
+        self.db = db_connection
         self.db.connect()
         self.initialize_database()
 
     def initialize_database(self):
-        query = """
-        CREATE TABLE IF NOT EXISTS tasks (
-            id SERIAL PRIMARY KEY,
-            title VARCHAR(255) NOT NULL,
-            description TEXT,
-            done BOOLEAN
-        )
-        """
+        query = Queries.get_create_table_query(self.db.db_type)
         self.db.execute_query(query)
 
     def create_task(self, title, description):
-        query = f"INSERT INTO tasks (title, description, done) VALUES ('{title}', '{description}', false) RETURNING id"
+        query_template = Queries.get_insert_task_query(self.db.db_type)
+        query = query_template.format(title=title, description=description)
         self.db.execute_query(query)
-        task_id = self.db.fetchone()[0]
+        if self.db.db_type == "postgres":
+            task_id = self.db.fetchone()[0]
+        else:  # SQLite
+            task_id = self.db.cursor.lastrowid
         self.db.commit()
         return self.get_task(task_id)
 
@@ -37,7 +28,7 @@ class TaskManager:
         self.db.execute_query(query)
         result = self.db.fetchone()
         if result:
-            task = Task(title=result[1], description=result[2], done=result[3])
+            task = Task(title=result[1], description=result[2], done=bool(result[3]))
             task.id = result[0]
             return task
         else:
@@ -52,7 +43,7 @@ class TaskManager:
                 task.description = description
             if done is not None:
                 task.done = done
-            query = f"UPDATE tasks SET title = '{task.title}', description = '{task.description}', done = {task.done} WHERE id = {task.id}"
+            query = Queries.get_update_task_query().format(title=task.title, description=task.description, done=task.done, task_id=task.id)
             self.db.execute_query(query)
             self.db.commit()
             return task
@@ -62,7 +53,7 @@ class TaskManager:
     def delete_task(self, task_id):
         task = self.get_task(task_id)
         if task:
-            query = f"DELETE FROM tasks WHERE id = {task.id}"
+            query = Queries.get_delete_task_query().format(task_id=task.id)
             self.db.execute_query(query)
             self.db.commit()
             return task
@@ -70,12 +61,12 @@ class TaskManager:
             return None
 
     def get_all_tasks(self):
-        query = "SELECT id, title, description, done FROM tasks"
+        query = Queries.get_select_all_tasks_query()
         self.db.execute_query(query)
         results = self.db.fetchall()
         tasks = []
         for result in results:
-            task = Task(title=result[1], description=result[2], done=result[3])
+            task = Task(title=result[1], description=result[2], done=bool(result[3]))
             task.id = result[0]
             tasks.append(task)
         return tasks

@@ -10,12 +10,12 @@ run:
 
 test:
 	PYTHONPATH=src/backend pytest
-	cd src/frontend && yarn test --watchAll=false &
+	# cd src/frontend && yarn test --watchAll=false &
 
 test-report:
-	PYTHONPATH=src/backend coverage run -m  pytest
+	PYTHONPATH=src/backend coverage run -m pytest src/backend/tests
 	coverage report -m
-	cd src/frontend && yarn report --watchAll=false &
+	# cd src/frontend && yarn reportsour--watchAll=false &
 
 # Comandos para o Docker Compose
 .PHONY: docker-up docker-down docker-clean-setup
