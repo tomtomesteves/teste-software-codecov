@@ -1,19 +1,27 @@
 import psycopg2
+import sqlite3
 import time
 
 MAX_RETRY = 10
 
-class PostgreSQLConnection:
-    def __init__(self, host, port, database, user, password):
+class DatabaseConnection:
+    def __init__(self, host=None, port=None, database=None, user=None, password=None, db_type="postgres"):
         self.host = host
         self.port = port
         self.database = database
         self.user = user
         self.password = password
+        self.db_type = db_type
         self.connection = None
         self.cursor = None
 
     def connect(self):
+        if self.db_type == "postgres":
+            self.connect_postgres()
+        elif self.db_type == "sqlite":
+            self.connect_sqlite()
+
+    def connect_postgres(self):
         retry = 0
         while retry < MAX_RETRY:
             try:
@@ -33,6 +41,10 @@ class PostgreSQLConnection:
             self.cursor = self.connection.cursor()
         else:
             raise psycopg2.OperationalError
+
+    def connect_sqlite(self):
+        self.connection = sqlite3.connect(self.database)
+        self.cursor = self.connection.cursor()
 
     def close(self):
         if self.cursor:
