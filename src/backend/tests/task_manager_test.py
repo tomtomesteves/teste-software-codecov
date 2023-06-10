@@ -144,3 +144,4 @@ def test_update_task_sql_syntax(mock_postgresql_connection):
 
     expected = "UPDATE tasks SET title = 'Updated Task', description = 'Updated Description', done = True WHERE id = 1"
     mock_postgresql_connection.execute_query.assert_called_with(expected)
+
