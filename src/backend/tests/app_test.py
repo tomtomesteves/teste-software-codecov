@@ -46,3 +46,17 @@ def test_get_single_task(test_client):
     assert response.status_code == 200
     task = response.json
     assert task["id"] == task_id
+
+def test_update_task(test_client):
+    response = test_client.post("/tasks", json={"title": "title1", "description": "description1"})
+    task_id = response.json["task"]["id"]
+
+    response = test_client.put(f"/tasks/{task_id}", json={"title": "new title", "description": "new description", "done": True})
+    assert response.status_code == 200
+    task = response.json["task"]
+    assert task["title"] == "new title"
+
+
+def test_404_for_non_existent_task(test_client):
+    response = test_client.get("/tasks/9999")
+    assert response.status_code == 404
