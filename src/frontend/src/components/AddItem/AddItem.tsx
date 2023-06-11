@@ -7,13 +7,21 @@ import { Toast } from 'react-bootstrap'
 
 interface Params extends RouteComponentProps<any> {}
 
-const AddItem: FC<Params> = ({ history }) => {
+const AddItem: FC<
+  Params & {
+    apiServer?: any
+  }
+> = ({ history, apiServer }) => {
   const api = useAPI()
   const [show, toggleToast] = useReducer((x: boolean) => !x, false)
 
   const onSubmit = async (item: Task) => {
     try {
-      await api.post('tasks', { ...item })
+      if (!!apiServer) {
+        apiServer()?.post?.('tasks', { ...item })
+      } else {
+        await api?.post?.('tasks', { ...item })
+      }
       history.push('/')
     } catch (e) {
       toggleToast()
@@ -24,7 +32,9 @@ const AddItem: FC<Params> = ({ history }) => {
   return (
     <React.Fragment>
       <Toast show={show} onClose={toggleToast}>
-        <Toast.Body>Algo de errado ocorreu! Tente novamente</Toast.Body>
+        <Toast.Body data-testid="error-toast">
+          Algo de errado ocorreu! Tente novamente
+        </Toast.Body>
       </Toast>
 
       <ItemForm handleOnSubmit={onSubmit} />
