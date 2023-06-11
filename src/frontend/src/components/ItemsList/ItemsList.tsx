@@ -1,16 +1,24 @@
-import { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import Item from '../Item'
 import useAPI from '../../hooks/useAPI'
 import { Task } from '../../models/Task'
 import ShouldRender from '../ShouldRender'
 
-const ItemsList = () => {
+type Params = {
+  apiServer?: any
+}
+const ItemsList: FC<Params> = ({ apiServer }) => {
   const api = useAPI()
   const [list, setList] = useState<Task[]>([])
 
   const getList = async () => {
     try {
-      const { data } = await api.get('tasks')
+      let data = undefined
+      if (!!apiServer) {
+        data = apiServer().get('tasks')?.data
+      } else {
+        data = (await api.get('tasks')).data
+      }
       setList(data?.tasks)
     } catch (e) {
       console.error('ERROR GETTING LIST', e)
@@ -35,7 +43,9 @@ const ItemsList = () => {
       <ShouldRender if={!!list?.length}>
         <div className="d-flex justify-content-center">
           {list?.map((item: any) => (
-            <Item key={item?.id} {...item} removeItem={removeItem} />
+            <div data-testid={`item-${item?.id}`} key={item?.id}>
+              <Item {...item} removeItem={removeItem} />
+            </div>
           ))}
         </div>
       </ShouldRender>
